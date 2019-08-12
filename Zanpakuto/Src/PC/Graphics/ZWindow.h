@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Src/PC/Graphics/Interfaces/IWindow.h"
+#include "Src/Interfaces/IWindow.h"
 
 namespace Zan
 {
@@ -15,6 +15,7 @@ namespace Zan
 		virtual bool Init()   override;
 		virtual bool DeInit() override;
 		virtual void Start() override;
+		virtual void SetApplication(IAppDelegate* delegate) override;
 
 	private:
 		IWindowImp* _impl;

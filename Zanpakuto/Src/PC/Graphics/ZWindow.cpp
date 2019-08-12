@@ -1,6 +1,6 @@
 #include "Src/PC/Graphics/ZWindow.h"
 
-#include "Src/PC/Graphics/Interfaces/IWindowImp.h"
+#include "Src/Interfaces/IWindowImp.h"
 
 #include "Src/Includes/DebugUtils.h"
 
@@ -30,4 +30,10 @@ void Zan::CWindow::Start()
 {
 	_impl->Run();
 }
+
+void Zan::CWindow::SetApplication(IAppDelegate* delegate)
+{
+	_impl->SetDelegate(delegate);
+}
+
 

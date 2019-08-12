@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\MathUtils\ZMatrix.cpp" />
+    <ClCompile Include="Src\MathUtils\ZVector.cpp" />
+    <ClCompile Include="Src\PC\Desktop.cpp" />
     <ClCompile Include="Src\PC\Graphics\Pimpl\WindowGL.cpp" />
     <ClCompile Include="Src\PC\Graphics\ZWindow.cpp" />
     <ClCompile Include="src\pc\main.cpp" />
@@ -26,9 +29,13 @@
   <ItemGroup>
     <ClInclude Include="Src\Includes\DebugUtils.h" />
     <ClInclude Include="Src\Includes\Generic.h" />
+    <ClInclude Include="Src\MathUtils\ZMatrix.h" />
+    <ClInclude Include="Src\MathUtils\ZVector.h" />
+    <ClInclude Include="Src\PC\Desktop.h" />
+    <ClInclude Include="Src\Interfaces\IAppDelegate.h" />
     <ClInclude Include="Src\PC\Graphics\Pimpl\WindowGL.h" />
-    <ClInclude Include="src\pc\Graphics\Interfaces\IWindowImp.h" />
-    <ClInclude Include="src\pc\Graphics\Interfaces\IWindow.h" />
+    <ClInclude Include="Src\Interfaces\IWindowImp.h" />
+    <ClInclude Include="Src\Interfaces\IWindow.h" />
     <ClInclude Include="Src\PC\Graphics\ZWindow.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -1,5 +1,7 @@
 #include "Src/PC/Graphics/Pimpl/WindowGL.h"
 
+#include "Src/Interfaces/IAppDelegate.h"
+
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
@@ -7,7 +9,7 @@
 
 Zan::CWindowGL::CWindowGL()
 : IWindowImp()
-, m_pcWindow(nullptr)
+, _pcWindow(nullptr)
 {
 }
 
@@ -19,9 +21,19 @@ bool Zan::CWindowGL::Initialise()
 		return false;
 	}
 
-	m_pcWindow = glfwCreateWindow(640, 480, "Zan", NULL, NULL);
 
-	if (!m_pcWindow)
+	_pcWindow = glfwCreateWindow(640, 480, "Zan", NULL, NULL);
+	glfwMakeContextCurrent(_pcWindow);
+
+	GLenum err = glewInit();
+	
+	if (GLEW_OK != err)
+	{
+		ASSERT(false, "Failed to create context");
+		return false;
+	}
+
+	if (!_pcWindow)
 	{
 		ASSERT(false, "Failed to create a window");
 		glfwTerminate();
@@ -31,7 +43,7 @@ bool Zan::CWindowGL::Initialise()
 
 bool Zan::CWindowGL::Destroy()
 {
-	if (m_pcWindow)
+	if (_pcWindow)
 	{
 		glfwTerminate();
 		return true;
@@ -41,18 +53,26 @@ bool Zan::CWindowGL::Destroy()
 	return false;
 }
 
+void Zan::CWindowGL::SetDelegate(IAppDelegate* delegate)
+{
+	ASSERT(delegate != nullptr, "nullptr");
+	_pcApplication = delegate;
+}
+
 void Zan::CWindowGL::Run()
 {
-	ASSERT(m_pcWindow != nullptr, "Window not created, init first");
+	ASSERT(_pcWindow != nullptr, "Window not created, init first");
+	ASSERT(_pcApplication != nullptr, "No delegate set");
 
 	/* Loop until the user closes the window */
-	while (!glfwWindowShouldClose(m_pcWindow))
+	while (!glfwWindowShouldClose(_pcWindow))
 	{
-		/* Render here */
-		glClear(GL_COLOR_BUFFER_BIT);
+		//TODO: Implement delta time;
+		_pcApplication->Tick(0.1f);
+		_pcApplication->Render();
 
 		/* Swap front and back buffers */
-		glfwSwapBuffers(m_pcWindow);
+		glfwSwapBuffers(_pcWindow);
 
 		/* Poll for and process events */
 		glfwPollEvents();
