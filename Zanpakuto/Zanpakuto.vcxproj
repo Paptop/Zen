@@ -23,12 +23,16 @@
     <ClCompile Include="Src\MathUtils\ZVector.cpp" />
     <ClCompile Include="Src\PC\Desktop.cpp" />
     <ClCompile Include="Src\PC\Graphics\Pimpl\WindowGL.cpp" />
+    <ClCompile Include="Src\PC\Graphics\Shaders\ZShader.cpp" />
     <ClCompile Include="Src\PC\Graphics\ZWindow.cpp" />
+    <ClCompile Include="Src\PC\Loaders\ZFileLoader.cpp" />
     <ClCompile Include="src\pc\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Includes\DebugUtils.h" />
     <ClInclude Include="Src\Includes\Generic.h" />
+    <ClInclude Include="Src\Includes\ZType.h" />
+    <ClInclude Include="Src\Includes\ZUtils.h" />
     <ClInclude Include="Src\MathUtils\ZMatrix.h" />
     <ClInclude Include="Src\MathUtils\ZVector.h" />
     <ClInclude Include="Src\PC\Desktop.h" />
@@ -36,7 +40,9 @@
     <ClInclude Include="Src\PC\Graphics\Pimpl\WindowGL.h" />
     <ClInclude Include="Src\Interfaces\IWindowImp.h" />
     <ClInclude Include="Src\Interfaces\IWindow.h" />
+    <ClInclude Include="Src\PC\Graphics\Shaders\ZShader.h" />
     <ClInclude Include="Src\PC\Graphics\ZWindow.h" />
+    <ClInclude Include="Src\PC\Loaders\ZFileLoader.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

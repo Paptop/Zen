@@ -10,6 +10,7 @@
 Zan::CWindowGL::CWindowGL()
 : IWindowImp()
 , _pcWindow(nullptr)
+, _pcApplication(nullptr)
 {
 }
 
