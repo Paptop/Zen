@@ -4,6 +4,8 @@
 
 namespace Zan
 {
+	class ZShaderGL;
+
 	class Desktop : public IAppDelegate 
 	{
 	public:
@@ -12,5 +14,7 @@ namespace Zan
 
 		virtual void Tick(float fDelta) override;
 		virtual void Render() override;
+	private:
+		ZShaderGL* _pcShader;
 	};
 }

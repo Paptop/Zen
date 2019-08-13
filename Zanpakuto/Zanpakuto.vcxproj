@@ -44,6 +44,10 @@
     <ClInclude Include="Src\PC\Graphics\ZWindow.h" />
     <ClInclude Include="Src\PC\Loaders\ZFileLoader.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Src\PC\Graphics\Shaders\source\Default_Frag_Sh.frag" />
+    <None Include="Src\PC\Graphics\Shaders\source\Default_Vertex_Sh.vert" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{149FF296-6DF2-4A09-93C0-B73B7FA35D18}</ProjectGuid>

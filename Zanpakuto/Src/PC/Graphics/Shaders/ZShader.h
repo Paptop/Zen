@@ -8,6 +8,7 @@ namespace Zan
 {
 	class ZShaderGL
 	{
+	public:
 		ZShaderGL(const GLchar* vertexShader, const GLchar* fragmentShader);
 		void Use();
 

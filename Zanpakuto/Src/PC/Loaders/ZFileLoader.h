@@ -1,9 +1,12 @@
 #pragma once
 
+#include <string>
+
 namespace Zan
 {
 	class ZFileLoader
 	{
-		static const char* LoadTextFile(const char* path);
+	public:
+		static std::string LoadTextFile(const char* path);
 	};
 }

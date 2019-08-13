@@ -6,12 +6,13 @@ int main()
 {
 	//Implemenation
 	Zan::CWindowGL openglImp;
-	Zan::Desktop desktop;
 
 	Zan::CWindow window(&openglImp);
+	window.Init();
+
+	Zan::Desktop desktop;
 	window.SetApplication(&desktop);
 
-	window.Init();
 	window.Start();
 
 	return 0;

@@ -84,4 +84,8 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Src\PC\Graphics\Shaders\source\Default_Frag_Sh.frag" />
+    <None Include="Src\PC\Graphics\Shaders\source\Default_Vertex_Sh.vert" />
+  </ItemGroup>
 </Project>
