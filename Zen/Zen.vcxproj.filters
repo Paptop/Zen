@@ -18,9 +18,6 @@
     <ClCompile Include="Src\Core\Math\ZMatrix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Core\Math\ZVector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Application\PC\Desktop.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -81,6 +78,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\Graphics\Opengl\Shaders\ZShaderGL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Core\Math\ZMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

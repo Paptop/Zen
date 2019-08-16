@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Core\Math\ZMatrix.cpp" />
-    <ClCompile Include="Src\Core\Math\ZVector.cpp" />
     <ClCompile Include="Src\Application\PC\Desktop.cpp" />
     <ClCompile Include="Src\Graphics\Opengl\Pimpl\WindowGL.cpp" />
     <ClCompile Include="Src\Graphics\Opengl\Shaders\ZShaderGL.cpp" />
@@ -30,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Core\Debug\DebugUtils.h" />
+    <ClInclude Include="Src\Core\Math\ZMath.h" />
     <ClInclude Include="Src\Core\Utils\Generic.h" />
     <ClInclude Include="Src\Core\Utils\ZType.h" />
     <ClInclude Include="Src\Core\Utils\ZUtils.h" />
