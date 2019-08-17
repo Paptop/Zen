@@ -59,6 +59,6 @@ namespace Zen {	namespace Math {
 			}
 
 
-			T mat[N * N];
+			std::array<T, N* N> mat;
 		};
 }}
