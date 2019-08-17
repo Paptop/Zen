@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\Core\Math\ZMatrix.cpp" />
     <ClCompile Include="Src\Application\PC\Desktop.cpp" />
     <ClCompile Include="Src\Graphics\Opengl\Pimpl\WindowGL.cpp" />
     <ClCompile Include="Src\Graphics\Opengl\Shaders\ZShaderGL.cpp" />
@@ -33,7 +32,7 @@
     <ClInclude Include="Src\Core\Utils\Generic.h" />
     <ClInclude Include="Src\Core\Utils\ZType.h" />
     <ClInclude Include="Src\Core\Utils\ZUtils.h" />
-    <ClInclude Include="Src\Core\Math\ZMatrix.h" />
+    <ClInclude Include="Src\Core\Math\ZMatrixN.h" />
     <ClInclude Include="Src\Core\Math\ZVector.h" />
     <ClInclude Include="Src\Application\PC\Desktop.h" />
     <ClInclude Include="Src\Application\Interfaces\IAppDelegate.h" />
