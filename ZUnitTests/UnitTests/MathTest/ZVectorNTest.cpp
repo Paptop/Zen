@@ -114,3 +114,15 @@ TEST(Math_VectorN_Dot, MathZ)
 
 	EXPECT_EQ(scalar, 3);
 }
+
+TEST(Math_VectorN_Normalize, MathZ)
+{
+	Zen::Math::ZVectorN<float, 3> vec3(3.0f, 1.0f, 2.0f);
+
+	float mag = vec3.Mag();
+	vec3.Normalize();
+	Zen::Math::ZVectorN<float, 3> vec3_r(0.80f, 0.26f, 0.53f);
+
+
+	EXPECT_TRUE(vec3.IsNearlyEq(vec3_r, 0.01f));
+}

@@ -3,6 +3,8 @@
 
 #include "Src/Core/Debug/DebugUtils.h"
 
+#include "Src/Core/Math/ZMath.h"
+
 #include <array>
 
 namespace Zen { namespace Math {
@@ -233,8 +235,6 @@ namespace Zen { namespace Math {
 
 			ZVectorN<T, N>& operator+=(T scalar)
 			{
-				ASSERT(rVector._vec.size() == _vec.size(), "Bad logic");
-
 				for (int i = 0; i < N; ++i)
 				{
 					_vec[i] += rVector._vec[i];
@@ -245,7 +245,6 @@ namespace Zen { namespace Math {
 
 			ZVectorN<T, N>& operator-=(T scalar)
 			{
-				ASSERT(rVector._vec.size() == _vec.size(), "Bad logic");
 
 				for (int i = 0; i < N; ++i)
 				{
@@ -257,7 +256,6 @@ namespace Zen { namespace Math {
 
 			ZVectorN<T, N>& operator*=(T scalar)
 			{
-				ASSERT(rVector._vec.size() == _vec.size(), "Bad logic");
 
 				for (int i = 0; i < N; ++i)
 				{
@@ -267,10 +265,18 @@ namespace Zen { namespace Math {
 				return *this;
 			}
 
+			ZVectorN<T, N>& operator/=(T scalar)
+			{
+				for (int i = 0; i < N; ++i)
+				{
+					_vec[i] /= scalar;
+				}
+
+				return *this;
+			}
+
 			ZVectorN<T, N> operator+(T scalar)
 			{
-				ASSERT(rVector._vec.size() == _vec.size(), "Bad logic");
-
 				ZVectorN<T, N> res;
 
 				for (int i = 0; i < N; ++i)
@@ -283,8 +289,6 @@ namespace Zen { namespace Math {
 
 			ZVectorN<T, N> operator-(T scalar)
 			{
-				ASSERT(rVector._vec.size() == _vec.size(), "Bad logic");
-
 				ZVectorN<T, N> res;
 
 				for (int i = 0; i < N; ++i)
@@ -298,8 +302,6 @@ namespace Zen { namespace Math {
 
 			ZVectorN<T, N> operator*(T scalar)
 			{
-				ASSERT(rVector._vec.size() == _vec.size(), "Bad logic");
-
 				ZVectorN<T, N> res;
 
 				for (int i = 0; i < N; ++i)
@@ -312,8 +314,6 @@ namespace Zen { namespace Math {
 
 			ZVectorN<T, N> operator/(T scalar)
 			{
-				ASSERT(rVector._vec.size() == _vec.size(), "Bad logic");
-
 				ZVectorN<T, N> res;
 
 				for (int i = 0; i < N; ++i)
@@ -362,10 +362,29 @@ namespace Zen { namespace Math {
 				return res;
 			}
 
-			T Normalize()
+			void Normalize()
 			{
-
+				(*this) /= (T)Mag();
 			}
+
+
+			bool IsNearlyEq(const ZVectorN& rVector, float prec = 0.0001f)
+			{
+				if (rVector._vec.size() != _vec.size())
+				{
+					return false;
+				}
+
+				bool Equal = true;
+
+				for (int i = 0; i < N; ++i)
+				{
+					Equal &= IsNearlyEqual(_vec[i], rVector._vec[i], prec);
+				}
+
+				return Equal;
+			}
+
 
 		private:
 			
