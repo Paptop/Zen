@@ -180,8 +180,7 @@ namespace Zen { namespace Math {
 				return *this;
 			}
 
-
-			ZVectorN<T, N> operator+(const ZVectorN& rVector)
+			ZVectorN<T, N> operator+(const ZVectorN& rVector) const
 			{
 				ASSERT(rVector._vec.size() == _vec.size(), "Bad logic");
 
@@ -195,7 +194,7 @@ namespace Zen { namespace Math {
 				return res;
 			}
 
-			ZVectorN<T, N> operator-(const ZVectorN& rVector)
+			ZVectorN<T, N> operator-(const ZVectorN& rVector) const
 			{
 				ASSERT(rVector._vec.size() == _vec.size(), "Bad logic");
 
@@ -210,7 +209,7 @@ namespace Zen { namespace Math {
 			}
 
 
-			ZVectorN<T, N> operator*(const ZVectorN& rVector)
+			ZVectorN<T, N> operator*(const ZVectorN& rVector) const
 			{
 				ASSERT(rVector._vec.size() == _vec.size(), "Bad logic");
 
@@ -224,7 +223,7 @@ namespace Zen { namespace Math {
 				return res;
 			}
 
-			ZVectorN<T, N> operator/(const ZVectorN& rVector)
+			ZVectorN<T, N> operator/(const ZVectorN& rVector) const
 			{
 				ASSERT(rVector._vec.size() == _vec.size(), "Bad logic");
 
@@ -407,3 +406,6 @@ namespace Zen { namespace Math {
 		};
 
 }}
+
+typedef Zen::Math::ZVectorN<float, 3> ZVector3;
+typedef Zen::Math::ZVectorN<float, 2> ZVector2;
