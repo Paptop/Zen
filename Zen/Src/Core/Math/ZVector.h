@@ -43,6 +43,11 @@ namespace Zen { namespace Math {
 				_vec[3] = w;
 			}
 
+			T* Data()
+			{
+				return _vec.data();
+			}
+
 			T& x()
 			{
 				return Element(0);
@@ -86,7 +91,7 @@ namespace Zen { namespace Math {
 			T& Element(int i)
 			{
 				ASSERT(i >= 0 && i < N, "Bad Logic");
-				reutrn _vec[i];
+				return _vec[i];
 			}
 
 			ZVectorN(int i)
@@ -237,7 +242,7 @@ namespace Zen { namespace Math {
 			{
 				for (int i = 0; i < N; ++i)
 				{
-					_vec[i] += rVector._vec[i];
+					_vec[i] += scalar;
 				}
 				return *this;
 			}
@@ -248,8 +253,9 @@ namespace Zen { namespace Math {
 
 				for (int i = 0; i < N; ++i)
 				{
-					_vec[i] -= scalar
+					_vec[i] -= scalar;
 				}
+
 				return *this;
 			}
 
@@ -281,7 +287,7 @@ namespace Zen { namespace Math {
 
 				for (int i = 0; i < N; ++i)
 				{
-					res._vec[i] = rVector._vec[i] + scalar;
+					res._vec[i] = _vec[i] + scalar;
 				}
 
 				return res;
