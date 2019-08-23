@@ -6,8 +6,5 @@
 
 namespace Zen
 {
-	bool IsNearlyEqual(float A, float B, float precision = eps)
-	{
-		return abs(B - A) < precision;
-	}
+	bool IsNearlyEqual(float A, float B, float precision = eps);
 }

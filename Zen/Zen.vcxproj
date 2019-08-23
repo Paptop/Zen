@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Application\PC\Desktop.cpp" />
+    <ClCompile Include="Src\Core\Math\ZMath.cpp" />
     <ClCompile Include="Src\Graphics\Opengl\Pimpl\WindowGL.cpp" />
     <ClCompile Include="Src\Graphics\Opengl\Shaders\ZShaderGL.cpp" />
     <ClCompile Include="Src\Application\PC\ZWindow.cpp" />
