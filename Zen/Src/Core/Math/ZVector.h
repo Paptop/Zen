@@ -43,7 +43,7 @@ namespace Zen { namespace Math {
 				_vec[3] = w;
 			}
 
-			T* Data()
+			const T* Data() const
 			{
 				return _vec.data();
 			}
@@ -407,5 +407,6 @@ namespace Zen { namespace Math {
 
 }}
 
+typedef Zen::Math::ZVectorN<float, 4> ZVector4;
 typedef Zen::Math::ZVectorN<float, 3> ZVector3;
 typedef Zen::Math::ZVectorN<float, 2> ZVector2;

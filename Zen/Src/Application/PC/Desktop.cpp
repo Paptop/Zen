@@ -16,14 +16,22 @@ const int iNumVertices = 3 * iNumTriangles;
 ZVector3 points[iNumVertices];
 int Index = 0;
 
-void AssembleTriangle(const ZVector3& a, const ZVector3& b, const ZVector3& c)
+void AssembleTriangle(const ZVector3& a, const ZVector3& ca,
+					  const ZVector3& b, const ZVector3& cb,
+					  const ZVector3& c, const ZVector3& cc)
 {
 	points[Index++] = a;
+	points[Index++] = ca;
 	points[Index++] = b;
+	points[Index++] = cb;
 	points[Index++] = c;
+	points[Index++] = cc;
 }
 
-void DivideTriangle(const ZVector3& a, const ZVector3& b, const ZVector3 c, int count)
+void DivideTriangle(
+		const ZVector3& a, const ZVector3& ca,
+		const ZVector3& b, const ZVector3& cb,
+		const ZVector3& c, const ZVector3& cc,  int count)
 {
 	if (count > 0)
 	{
@@ -32,21 +40,22 @@ void DivideTriangle(const ZVector3& a, const ZVector3& b, const ZVector3 c, int 
 		ZVector3 v1 = (a + c) * 0.5f;
 		ZVector3 v2 = (b + c) * 0.5f;
 	//subdivide all but middle triangle
-		DivideTriangle(a, v0, v1, count - 1);
-		DivideTriangle(c, v1, v2, count - 1);
-		DivideTriangle(b, v2, v0, count - 1);
+		DivideTriangle(a, ca, v0, cb, v1, cc, count - 1);
+		DivideTriangle(c, ca, v1, cb, v2, cc, count - 1);
+		DivideTriangle(b, ca, v2, cb, v0, cc, count - 1);
 	}
 	else
 	{
-		AssembleTriangle(a, b, c);
+		AssembleTriangle(a, ca, b, cb, c, cc);
 	}
 }
 
 ZVector3 triangle[] =
 {
-	{-1.0f, -1.0f, 0.0f},
-	{0.0f,  1.0f, 0.0f},
-	{1.0f, -1.0f, 0.0f}
+	//Pos					//Colour
+	{1.0f,  -1.0f, 0.0f},  {1.0f,  0.0f, 0.0f},
+	{-1.0f, -1.0f, 0.0f},  {0.0f,  1.0f, 0.0f},
+	{0.0f,   1.0f, 0.0f }, {0.0f,  0.0f, 1.0f}
 };
 
 
@@ -59,7 +68,9 @@ Zen::Desktop::Desktop()
 	std::string fragSrc = IO::ZFileLoader::LoadTextFile("Src/Graphics/OpenGL/Shaders/source/Default_Frag_Sh.frag");
 	_pcShader = new ZShaderGL(vertexSrc.c_str(), fragSrc.c_str());
 
-	DivideTriangle(triangle[0], triangle[1], triangle[2], iSubdivide);
+	DivideTriangle(triangle[0], triangle[1],
+				   triangle[2], triangle[3],
+				   triangle[4], triangle[5], iSubdivide);
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -68,11 +79,17 @@ Zen::Desktop::Desktop()
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(ZVector3), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(ZVector3), (void*)(1 * sizeof(ZVector3)));
+	glEnableVertexAttribArray(1);
+
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glBindVertexArray(0);
+
+	_pcShader->Use();
+	//_pcShader->SetVec4("colour", { 1.0f,0.0f,0.0f,1.0f });
 }
 
 Zen::Desktop::~Desktop()
@@ -87,8 +104,6 @@ void Zen::Desktop::Render()
 {
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
-
-	_pcShader->Use();
 	glBindVertexArray(VAO);
-	glDrawArrays(GL_TRIANGLES, 0, iNumTriangles);
+	glDrawArrays(GL_TRIANGLES, 0, iNumVertices);
 }

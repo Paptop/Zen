@@ -2,12 +2,31 @@
 
 #include "Src/Core/Debug/DebugUtils.h"
 
-
 Zen::ZShaderGL::ZShaderGL(const GLchar* vertexShader, const GLchar* fragmentShader)
 {
 	u32 iVertex = CreateAndCompile(GL_VERTEX_SHADER, vertexShader);
 	u32 iFrag = CreateAndCompile(GL_FRAGMENT_SHADER, fragmentShader);
 	CreateProgram(iVertex, iFrag);
+}
+
+void Zen::ZShaderGL::SetVec4(const std::string& name, const ZVector4& vec4) const
+{
+	glUniform4fv(glGetUniformLocation(_iID, name.c_str()), 1, vec4.Data());
+}
+
+void Zen::ZShaderGL::SetBool(const std::string& name, bool value) const
+{
+	glUniform1i(glGetUniformLocation(_iID, name.c_str()), (int)value);
+}
+
+void Zen::ZShaderGL::SetInt(const std::string& name, int value) const
+{
+	glUniform1i(glGetUniformLocation(_iID, name.c_str()), (int)value);
+}
+
+void Zen::ZShaderGL::SetFloat(const std::string& name, float value) const
+{
+	glUniform1f(glGetUniformLocation(_iID, name.c_str()), value);
 }
 
 void Zen::ZShaderGL::Use()
@@ -62,4 +81,6 @@ int Zen::ZShaderGL::CreateProgram(u32 vertexShader, u32 fragmentShader)
 
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+
+	return 0;
 }
