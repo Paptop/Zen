@@ -9,8 +9,8 @@
 
 #include "GL/glew.h"
 
-const int iSubdivide = 5;
-const int iNumTriangles = 729; // 3 ^ 10 + 1;
+const int iSubdivide = 7;
+const int iNumTriangles = 6561; // 3 ^ 10 + 1;
 const int iNumVertices = 3 * iNumTriangles;
 
 ZVector3 points[iNumVertices];
@@ -50,16 +50,42 @@ void DivideTriangle(
 	}
 }
 
-ZVector3 triangle[] =
+/*
+float triangle[] =
 {
-	//Pos					//Colour
-	{1.0f,  -1.0f, 0.0f},  {1.0f,  0.0f, 0.0f},
-	{-1.0f, -1.0f, 0.0f},  {0.0f,  1.0f, 0.0f},
-	{0.0f,   1.0f, 0.0f }, {0.0f,  0.0f, 1.0f}
+	//Pos					//Colour			//UV
+	1.0f,  -1.0f, 0.0f,  1.0f,  0.0f, 0.0f,		1.0f, 0.0f
+	-1.0f, -1.0f, 0.0f,  0.0f,  1.0f, 0.0f,		0.0f, 0.0f,
+	0.0f,   1.0f, 0.0f,  0.0f,  0.0f, 1.0f,		0.5f, 1.0f
+};*/
+
+
+float rectangle[] = {
+
+	//  3----- 0
+	//  |	   |
+	//  |	   |
+	//  2------1
+	// positions          // colors           // texture coords
+	 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // 0     
+	 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // 1	  
+	-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // 2	 
+	-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // 3
+
+	//1.0f,  -1.0f, 0.0f,  1.0f,  0.0f, 0.0f,		1.0f, 0.0f,
+	//-1.0f, -1.0f, 0.0f,  0.0f,  1.0f, 0.0f,     0.0f, 0.0f,
+	//0.0f,   1.0f, 0.0f,  0.0f,  0.0f, 1.0f,		0.5f, 1.0f
 };
 
 
-u32 VBO, VAO;
+u32 indices[] =
+{
+	0, 1, 2,
+	2, 3, 0
+};
+
+
+u32 VBO, VAO, EBO, texture1, texture2;
 
 Zen::Desktop::Desktop()
 : _pcShader(nullptr)
@@ -68,28 +94,81 @@ Zen::Desktop::Desktop()
 	std::string fragSrc = IO::ZFileLoader::LoadTextFile("Src/Graphics/OpenGL/Shaders/source/Default_Frag_Sh.frag");
 	_pcShader = new ZShaderGL(vertexSrc.c_str(), fragSrc.c_str());
 
-	DivideTriangle(triangle[0], triangle[1],
-				   triangle[2], triangle[3],
-				   triangle[4], triangle[5], iSubdivide);
+	//DivideTriangle(triangle[0], triangle[1],
+				   //triangle[2], triangle[3],
+				   //triangle[4], triangle[5], iSubdivide);
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(rectangle), rectangle, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(ZVector3), (void*)0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(ZVector3), (void*)(1 * sizeof(ZVector3)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
-	//glBindVertexArray(0);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
+
+	//Textures
+	glGenTextures(1, &texture1);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture1);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	int width, height;
+	byte* data = Zen::IO::ZFileLoader::LoadImage("C:\\Users\\user\\Pictures\\stone.jpg", width, height);
+
+	if (data)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		ASSERT(false, "Failed to load");
+	}
+
+	Zen::IO::ZFileLoader::FreeImage(data);
+
+	glGenTextures(1, &texture2);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, texture2);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	data = Zen::IO::ZFileLoader::LoadImage("C:\\Users\\user\\Pictures\\awesomeface.png", width, height);
+
+	if (data)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		ASSERT(false, "Failed to load");
+	}
+
+	Zen::IO::ZFileLoader::FreeImage(data);
 
 	_pcShader->Use();
-	//_pcShader->SetVec4("colour", { 1.0f,0.0f,0.0f,1.0f });
+	_pcShader->SetInt("texture1", 0);
+	_pcShader->SetInt("texture2", 1);
 }
 
 Zen::Desktop::~Desktop()
@@ -105,5 +184,6 @@ void Zen::Desktop::Render()
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glBindVertexArray(VAO);
-	glDrawArrays(GL_TRIANGLES, 0, iNumVertices);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	//glDrawArrays(GL_TRIANGLES, 0, 3);
 }
